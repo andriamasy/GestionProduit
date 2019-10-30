@@ -1,1 +1,1 @@
-# GestionProduit
+# Gestion Produit: Base framework Symfony 
