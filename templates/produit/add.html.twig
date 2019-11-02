@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-dark">
+                        <div class="card-header">
+                            <h3 class="card-title">Information Obligatoire</h3>
+                        </div>
+                        <div class="card-body">
+                            {{ form_start(form) }}
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.name) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.reference) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.category) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                            {{ form_row(form.created_at) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () {
+            //Date range picker
+            $('.date_creation').datepicker(
+                {
+                    format: 'dd/mm/yyyy',
+                    startDate: '-3d',
+                    orientation: "bottom auto"
+                }
+            );
+        })
+    </script>
+{% endblock %}
+

@@ -48,6 +48,86 @@ class Produit
      */
     private $category;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $poidDufruitAcheter;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $poidDufruitepluches;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $PassageRaffiner;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nombreTamissage;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $poidDuFruitTamisse;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $passageEmissionneuse;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $QteEau;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $poidFinal;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $MesurrPHAvant;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $qteAcide;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $mesurePHApres;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $mesureBrix;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $qteSucre;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $mesureBrixFinal;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbrBoiteProduite;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
@@ -157,6 +237,198 @@ class Produit
         if ($this->category->contains($category)) {
             $this->category->removeElement($category);
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getPoidDufruitAcheter(): ?string
+    {
+        return $this->poidDufruitAcheter;
+    }
+
+    public function setPoidDufruitAcheter(?string $poidDufruitAcheter): self
+    {
+        $this->poidDufruitAcheter = $poidDufruitAcheter;
+
+        return $this;
+    }
+
+    public function getPoidDufruitepluches(): ?int
+    {
+        return $this->poidDufruitepluches;
+    }
+
+    public function setPoidDufruitepluches(?int $poidDufruitepluches): self
+    {
+        $this->poidDufruitepluches = $poidDufruitepluches;
+
+        return $this;
+    }
+
+    public function getPassageRaffiner(): ?string
+    {
+        return $this->PassageRaffiner;
+    }
+
+    public function setPassageRaffiner(?string $PassageRaffiner): self
+    {
+        $this->PassageRaffiner = $PassageRaffiner;
+
+        return $this;
+    }
+
+    public function getNombreTamissage(): ?int
+    {
+        return $this->nombreTamissage;
+    }
+
+    public function setNombreTamissage(?int $nombreTamissage): self
+    {
+        $this->nombreTamissage = $nombreTamissage;
+
+        return $this;
+    }
+
+    public function getPoidDuFruitTamisse(): ?int
+    {
+        return $this->poidDuFruitTamisse;
+    }
+
+    public function setPoidDuFruitTamisse(?int $poidDuFruitTamisse): self
+    {
+        $this->poidDuFruitTamisse = $poidDuFruitTamisse;
+
+        return $this;
+    }
+
+    public function getPassageEmissionneuse(): ?string
+    {
+        return $this->passageEmissionneuse;
+    }
+
+    public function setPassageEmissionneuse(?string $passageEmissionneuse): self
+    {
+        $this->passageEmissionneuse = $passageEmissionneuse;
+
+        return $this;
+    }
+
+    public function getQteEau(): ?int
+    {
+        return $this->QteEau;
+    }
+
+    public function setQteEau(?int $QteEau): self
+    {
+        $this->QteEau = $QteEau;
+
+        return $this;
+    }
+
+    public function getPoidFinal(): ?int
+    {
+        return $this->poidFinal;
+    }
+
+    public function setPoidFinal(?int $poidFinal): self
+    {
+        $this->poidFinal = $poidFinal;
+
+        return $this;
+    }
+
+    public function getMesurrPHAvant(): ?int
+    {
+        return $this->MesurrPHAvant;
+    }
+
+    public function setMesurrPHAvant(?int $MesurrPHAvant): self
+    {
+        $this->MesurrPHAvant = $MesurrPHAvant;
+
+        return $this;
+    }
+
+    public function getQteAcide(): ?int
+    {
+        return $this->qteAcide;
+    }
+
+    public function setQteAcide(?int $qteAcide): self
+    {
+        $this->qteAcide = $qteAcide;
+
+        return $this;
+    }
+
+    public function getMesurePHApres(): ?int
+    {
+        return $this->mesurePHApres;
+    }
+
+    public function setMesurePHApres(?int $mesurePHApres): self
+    {
+        $this->mesurePHApres = $mesurePHApres;
+
+        return $this;
+    }
+
+    public function getMesureBrix(): ?int
+    {
+        return $this->mesureBrix;
+    }
+
+    public function setMesureBrix(?int $mesureBrix): self
+    {
+        $this->mesureBrix = $mesureBrix;
+
+        return $this;
+    }
+
+    public function getQteSucre(): ?int
+    {
+        return $this->qteSucre;
+    }
+
+    public function setQteSucre(?int $qteSucre): self
+    {
+        $this->qteSucre = $qteSucre;
+
+        return $this;
+    }
+
+    public function getMesureBrixFinal(): ?int
+    {
+        return $this->mesureBrixFinal;
+    }
+
+    public function setMesureBrixFinal(?int $mesureBrixFinal): self
+    {
+        $this->mesureBrixFinal = $mesureBrixFinal;
+
+        return $this;
+    }
+
+    public function getNbrBoiteProduite(): ?int
+    {
+        return $this->nbrBoiteProduite;
+    }
+
+    public function setNbrBoiteProduite(?int $nbrBoiteProduite): self
+    {
+        $this->nbrBoiteProduite = $nbrBoiteProduite;
 
         return $this;
     }

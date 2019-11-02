@@ -3,3 +3,16 @@
     background-color: #17a2b8;
     border-color: #17a2b8;
 }
+
+.sidebar , body{
+    font-size: 14px;
+}
+._btnajouter {
+    float: right;
+    margin-bottom: 0.5rem;
+}
+
+label.required:before {
+    content: "*";
+    color: red;
+}

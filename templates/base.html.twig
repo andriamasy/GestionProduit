@@ -21,6 +21,7 @@
         <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
         <!-- Daterange picker -->
         <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}">
         <!-- summernote -->
         <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
         <!-- Google Font: Source Sans Pro -->
@@ -41,7 +42,7 @@
                         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="../../index3.html" class="nav-link">Tableau de bord</a>
+                        <a href="/" class="nav-link">Tableau de bord</a>
                     </li>
 
                 </ul>
@@ -90,19 +91,26 @@
 
                     <!-- Mon compte-->
                     <li class="nav-item dropdown">
+                        {% if app.user %}
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-user"></i>
                         </a>
+                        {% else %}
+                            <a class="nav-link"  href="#">Login</a>
+                        {% endif %}
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class="dropdown-item dropdown-header">Parametres compte</span>
+                            <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item">
                                 <i class="fas fa-user-circle mr-2"></i> Mon Compte
                             </a>
-                            <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item">
-                                <i class="fas fa-tools mr-2"></i> Parametres
+                                <i class="fas fa-cog mr-2"></i> Parametres
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item dropdown-footer">Mon Compte</a>
+                            <a href="/logout" class="dropdown-item">
+                                <i class="fas fa-power-off mr-2"></i> Déconnexion
+                            </a>
                         </div>
                     </li>
                 </ul>
@@ -125,7 +133,11 @@
                             <img src="{{ asset('img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block">Alexander Pierce</a>
+                            <a href="#" class="d-block">
+                                {% if app.user  %}
+                                    {{ app.user.firstname }} {{ app.user.lastname }}
+                                {% endif %}
+                            </a>
                         </div>
                     </div>
 
@@ -135,7 +147,7 @@
                             <!-- Add icons to the links using the .nav-icon class
                                  with font-awesome or any other icon font library -->
                             <li class="nav-item ">
-                                <a href="#" class="nav-link">
+                                <a href="/" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
                                         Tableau de board
@@ -145,7 +157,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ path('produit') }}" class="nav-link">
                                     <i class="nav-icon fas fa-list"></i>
                                     <p>
                                         Produits
@@ -156,7 +168,7 @@
                             <li class="nav-header">GESTION COMMANDE</li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-cart-plus"></i>
+                                    <i class="nav-icon fas fa-shopping-cart"></i>
                                     <p>
                                         Bon de Commande
                                     </p>
@@ -220,9 +232,37 @@
                 </div>
                 <!-- /.sidebar -->
             </aside>
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <div class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="m-0 text-dark">{% if titre is defined  %} {{ titre }} {% endif %}</h1>
+                            </div><!-- /.col -->
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="{{ path('dasboard') }}">Home</a></li>
+                                    <li class="breadcrumb-item active">{% if bande is defined %} {{ bande }} {% endif %}</li>
+                                </ol>
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.content-header -->
+                {% block content %}{% endblock %}
+            </div>
 
+            <!-- Main Footer -->
+            <footer class="main-footer">
+                <strong>Copyright &copy; {{  "now"|date("Y") }} <a href="http://marosokatra.mg">Marosokatra</a>.</strong>
+                Tous les droits sont réservés.
+                <div class="float-right d-none d-sm-inline-block">
+                    <b>Version</b> 1.0.0
+                </div>
+            </footer>
         </div>
-        {% block content %}{% endblock %}
+
 
         <!-- jQuery -->
         <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
@@ -243,6 +283,7 @@
         <!-- daterangepicker -->
         <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
         <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
+        <script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
         <!-- Tempusdominus Bootstrap 4 -->
         <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
         <!-- Summernote -->
@@ -251,14 +292,18 @@
         <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
         <!-- AdminLTE App -->
         <script src="{{ asset('js/adminlte.js') }}"></script>
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-       <!-- <script src="{{ asset('js/pages/dashboard.js') }}"></script> -->
+        <!-- OPTIONAL SCRIPTS -->
+        <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
+        <script src="{{ asset('js/demo.js') }}"></script>
+        <script src="{{ asset('js/pages/dashboard3.js') }}"></script>
 
         <script>
             $(function() {
                 //The passed argument has to be at least a empty object or a object with your desired options
-                $('body').overlayScrollbars({ });
-                $('.sidebar').overlayScrollbars({ });
+                //$('body').overlayScrollbars({ });
+                $('.sidebar').overlayScrollbars({
+
+                });
             });
         </script>
         {% block javascripts %}{% endblock %}

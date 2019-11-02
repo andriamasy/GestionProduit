@@ -11525,7 +11525,6 @@ body,
 }
 
 .sidebar {
-  top : 58px;
   height: calc(100% - 4rem);
   overflow-y: auto;
   padding-bottom: 0;
