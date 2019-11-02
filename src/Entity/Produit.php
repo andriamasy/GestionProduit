@@ -44,7 +44,7 @@ class Produit
     private $commandes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\category", inversedBy="produits")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="produits")
      */
     private $category;
 
@@ -136,14 +136,14 @@ class Produit
     }
 
     /**
-     * @return Collection|category[]
+     * @return Collection|Category[]
      */
     public function getCategory(): Collection
     {
         return $this->category;
     }
 
-    public function addCategory(category $category): self
+    public function addCategory(Category $category): self
     {
         if (!$this->category->contains($category)) {
             $this->category[] = $category;
@@ -152,7 +152,7 @@ class Produit
         return $this;
     }
 
-    public function removeCategory(category $category): self
+    public function removeCategory(Category $category): self
     {
         if ($this->category->contains($category)) {
             $this->category->removeElement($category);

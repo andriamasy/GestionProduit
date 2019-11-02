@@ -34,17 +34,17 @@ class Commande
     private $code;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\user", inversedBy="commandes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commandes")
      */
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\produit", inversedBy="commandes")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Produit", inversedBy="commandes")
      */
     private $produit;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Livraisonclient", mappedBy="commande")
+     * @ORM\OneToMany(targetEntity="App\Entity\LivraisonClient", mappedBy="commande")
      */
     private $livraisonclients;
 
@@ -95,12 +95,12 @@ class Commande
         return $this;
     }
 
-    public function getUser(): ?user
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?user $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
@@ -108,14 +108,14 @@ class Commande
     }
 
     /**
-     * @return Collection|produit[]
+     * @return Collection|Produit[]
      */
     public function getProduit(): Collection
     {
         return $this->produit;
     }
 
-    public function addProduit(produit $produit): self
+    public function addProduit(Produit $produit): self
     {
         if (!$this->produit->contains($produit)) {
             $this->produit[] = $produit;
@@ -124,7 +124,7 @@ class Commande
         return $this;
     }
 
-    public function removeProduit(produit $produit): self
+    public function removeProduit(Produit $produit): self
     {
         if ($this->produit->contains($produit)) {
             $this->produit->removeElement($produit);
@@ -141,7 +141,7 @@ class Commande
         return $this->livraisonclients;
     }
 
-    public function addLivraisonclient(Livraisonclient $livraisonclient): self
+    public function addLivraisonclient(LivraisonClient $livraisonclient): self
     {
         if (!$this->livraisonclients->contains($livraisonclient)) {
             $this->livraisonclients[] = $livraisonclient;
@@ -151,7 +151,7 @@ class Commande
         return $this;
     }
 
-    public function removeLivraisonclient(Livraisonclient $livraisonclient): self
+    public function removeLivraisonclient(LivraisonClient $livraisonclient): self
     {
         if ($this->livraisonclients->contains($livraisonclient)) {
             $this->livraisonclients->removeElement($livraisonclient);

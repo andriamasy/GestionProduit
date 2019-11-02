@@ -46,7 +46,7 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $adresse;
 
@@ -56,7 +56,7 @@ class User implements UserInterface
     private $username;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="id_user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="user")
      */
     private $commandes;
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Marosokatra</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{{ asset('css/ionicons.min.css') }}">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('css/adminlte.css') }}">
+    <!-- style personnaliser -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="{{ asset('css/font-face.css') }}" rel="stylesheet">
+    <title>{% block title %}Marosokatra : Gestion Produit {% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body class="hold-transition login-page">
+{% block body %}{% endblock %}
+<!-- jQuery -->
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('js/adminlte.js') }}"></script>
+
+</body>
+</html>

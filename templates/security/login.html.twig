@@ -1,0 +1,64 @@
+{% extends 'baseLogin.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<div class="hold-transition login-page">
+    <div class="login-box">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+        <div class="login-logo">
+            <a href="{{ path('dasboard') }}"><b>Marosokatra</b></a>
+        </div>
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Se connecter à Gestion Produit</p>
+                <form method="post">
+                    <div class="input-group mb-3">
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
+                               placeholder="Adresse Email" required autofocus>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" name="_remember_me" id="remember">
+                                <label for="remember">
+                                    Remember Me
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-info btn-block btn-sm">Se connecter</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+
+                    <p class="mb-1">
+                        <a href="#">Mot de pass oublier ?</a>
+                    </p>
+
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
