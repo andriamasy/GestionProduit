@@ -11213,10 +11213,11 @@ body,
 }
 
 :not(.layout-fixed) .main-sidebar {
-  height: inherit;
+  /*height: inherit; */
   min-height: 100%;
   position: absolute;
   top: 0;
+  bottom: 0;
 }
 
 .layout-fixed .brand-link {
@@ -11524,6 +11525,7 @@ body,
 }
 
 .sidebar {
+  top : 58px;
   height: calc(100% - 4rem);
   overflow-y: auto;
   padding-bottom: 0;
