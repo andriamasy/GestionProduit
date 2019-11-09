@@ -27,7 +27,7 @@ $(document).ready(function() {
     $(".only-numeric").bind("keypress", function (e) {
         var iKeyCode = e.which ? e.which : e.keyCode
 
-        if (iKeyCode !== 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57) && iKeyCode !== 188) {
+        if (iKeyCode !== 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57) ) {
             if($(this).next('span').length === 0 ) {
                 $($error).insertAfter($(this));
             }

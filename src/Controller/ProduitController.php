@@ -58,7 +58,9 @@ class ProduitController extends AbstractController
         return $this->render('produit/add.html.twig', [
             'form' => $form->createView(),
             'titre' => 'Ajouter Produits',
-            'bande' => 'Produit',
+            'bande' => 'Ajouter Produit',
+            'routeParent' => 'produit',
+            'routeNameParent' => 'Listes Produits',
         ]);
     }
 
