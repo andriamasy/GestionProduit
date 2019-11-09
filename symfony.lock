@@ -1,4 +1,7 @@
 {
+    "container-interop/container-interop": {
+        "version": "1.2.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -537,10 +540,22 @@
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"
     },
+    "zendframework/zend-barcode": {
+        "version": "2.7.1"
+    },
     "zendframework/zend-code": {
         "version": "3.4.0"
     },
     "zendframework/zend-eventmanager": {
         "version": "3.2.1"
+    },
+    "zendframework/zend-servicemanager": {
+        "version": "3.4.0"
+    },
+    "zendframework/zend-stdlib": {
+        "version": "3.2.1"
+    },
+    "zendframework/zend-validator": {
+        "version": "2.12.2"
     }
 }

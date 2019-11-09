@@ -3,18 +3,19 @@
 {% block content %}
     <section class="content">
         <div class="container-fluid">
+            {{ form_start(form,{'class': 'needs-validation'}) }}
             <div class="row">
                 <div class="col-md-6">
-                    <div class="card card-dark">
+                    <div class="card card-light">
                         <div class="card-header">
-                            <h3 class="card-title">Information Obligatoire</h3>
+                            <h3 class="card-title">Informations</h3>
                         </div>
                         <div class="card-body">
-                            {{ form_start(form) }}
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         {{ form_row(form.name) }}
+                                        {{ form_errors(form.name) }}
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -31,37 +32,152 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="far fa-calendar-alt"></i>
-                                                </span>
-                                            </div>
-                                            {{ form_row(form.created_at) }}
-                                        </div>
+                                        {{ form_row(form.created_at) }}
                                     </div>
                                 </div>
                             </div>
-                            {{ form_end(form) }}
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.poidDufruitAcheter) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.poidDufruitepluches) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.PassageRaffiner) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.nombreTamissage) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.poidDuFruitTamisse) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.passageEmissionneuse) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.poidFinal) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.MesurrPHAvant) }}
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-
+                <!-- debut infromation optionnelle -->
+                <div class="col-md-6">
+                    <div class="card card-light">
+                        <div class="card-header">
+                            <h3 class="card-title">Plus des Informations</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.mesurePHApres) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.mesureBrix) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.qteSucre) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.mesureBrixFinal) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.QteEau) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.qteAcide) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.nbrBoiteProduite) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.description) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <a href="{{ path('produit') }}" class="btn btn-danger btn-sm">Annuler</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_row(form.Enregistrer) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            {{ form_end(form) }}
 
         </div>
     </section>
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('js/custom.javascript.js') }}"></script>
     <script>
         $(function () {
             //Date range picker
             $('.date_creation').datepicker(
                 {
                     format: 'dd/mm/yyyy',
-                    startDate: '-3d',
-                    orientation: "bottom auto"
+                    orientation: "bottom auto",
+                    autoclose: true,
+                    startDate: -Infinity
                 }
             );
         })

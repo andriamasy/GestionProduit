@@ -23,8 +23,15 @@ class ObjectManager
     public function saveObject($_object)
     {
         $object = $_object;
-        $this->em->persist($object);
-        $this->em->flush();
+        try{
+            $this->em->persist($object);
+            $this->em->flush();
+            return true;
+        } catch (\Exception $ex) {
+            return false;
+        }
+
+
     }
 
 }

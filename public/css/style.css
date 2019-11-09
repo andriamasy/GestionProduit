@@ -16,3 +16,22 @@ label.required:before {
     content: "*";
     color: red;
 }
+
+.info-box .progress-description, .info-box .info-box-text {
+    white-space : normal;
+    margin-bottom: 0.5rem;
+}
+
+.info-box {
+    height: 100px;
+}
+table .table-produit {
+    min-width: 904px;
+}
+.margin-left-1 {
+    margin-left: 12px;
+}
+
+.margin-left-2 {
+    margin-left: 24px;
+}

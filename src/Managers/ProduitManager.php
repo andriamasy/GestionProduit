@@ -4,12 +4,18 @@
 namespace App\Managers;
 
 
+use App\Common\ObjectManager;
 use App\Entity\Produit;
 use App\Factory\ProduitManagerStaticFactory;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProduitManager
 {
+
+    /**
+     * @var ObjectManager
+     */
+    private $om;
     /**
      * @var EntityManagerInterface
      */
@@ -18,9 +24,11 @@ class ProduitManager
     /**
      * ProduitController constructor.
      * @param EntityManagerInterface $em
+     * @param ObjectManager $om
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, ObjectManager $om)
     {
+        $this->om = $om;
         $this->em = $em;
     }
 
@@ -37,9 +45,13 @@ class ProduitManager
     public function addProduct($_data)
     {
         $oData = $_data;
-        $oProduitFactory = new ProduitManagerStaticFactory();
-        $oProduct = $oProduitFactory::createNewFactoryProduit($oData);
-        dump($oProduct); die;
+        $bReturn = $this->om->saveObject($oData);
+        if($bReturn) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 }

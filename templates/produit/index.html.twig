@@ -16,7 +16,6 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Listes des Produits</h3>
-
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
                             <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
@@ -27,25 +26,48 @@
                     </div>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover">
+                <div class="card-body table-responsive p-0 scrollTable" >
+                    <table class="table table-hover table-produit">
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>User</th>
+                            <th>Nom Produit</th>
+                            <th>Reference</th>
                             <th>Date</th>
-                            <th>Status</th>
-                            <th>Reason</th>
+                            <th>Production</th>
+                            <th>Nombre de Tamissage</th>
+                            <th>Poids Final</th>
+                            <th>Mesure de Brix</th>
+                            <th>Nombres de boites produits </th>
+                            <th style="width : 20%"></th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for produit in produits %}
                         <tr>
-                            <td>183</td>
-                            <td>John Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="tag tag-success">Approved</span></td>
-                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                            <td>{{ produit.id }}</td>
+                            <td>{{ produit.name }}</td>
+                            <td>{{ produit.reference }}</td>
+                            <td class="text-center">{{ produit.createdAt | date('d/m/Y') }}</td>
+                            <td class="text-center">{{ produit.category.name }}</td>
+                            <td class="text-center">{{ produit.nombreTamissage }} </td>
+                            <td class="text-center">{{ produit.poidFinal }} Kg</td>
+                            <td class="text-center">{{ produit.mesureBrix }} Kg</td>
+                            <td class="text-center">{{ produit.nbrBoiteProduite}} </td>
+                            <td class="project-actions text-right">
+                                <a class="btn btn-default btn-sm" href="{{ path('produit_view',{"id": produit.id}) }}">
+                                    <i class="fas fa-eye">
+                                    </i>
+                                </a>
+                                <a class="btn btn-default btn-sm" href="#">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                </a>
+                                <a class="btn btn-danger btn-sm" href="#">
+                                    <i class="fas fa-trash">
+                                    </i>
+                                </a>
+                            </td>
                         </tr>
                         {% endfor %}
                         </tbody>
