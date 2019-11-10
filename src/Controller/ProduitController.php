@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Form\Type\ProduitType;
+use App\Managers\PrintManager;
 use App\Managers\ProduitManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -70,7 +72,8 @@ class ProduitController extends AbstractController
      * @param $id
      * @return Response
      */
-    public function viewProduct(Request $request, Produit $id ) {
+    public function viewProduct(Request $request, Produit $id )
+    {
         $oProduit = $id;
         return $this->render('produit/view.html.twig',[
             'titre' => 'Detail Produit',
@@ -79,5 +82,37 @@ class ProduitController extends AbstractController
             'routeNameParent' => 'Listes Produits',
             'produit' => $oProduit,
         ]);
+    }
+
+    /**
+     * @Route("api/produit/{id}",
+     *     name="api_produit_view",
+     *     methods={"GET"},
+     *     options = { "expose" = true }
+     *     )
+     * @param Produit $id
+     * @param PrintManager $printManager
+     * @return JsonResponse
+     */
+    public function apiProduitView(Produit $id, PrintManager $printManager)
+    {
+        $oProduit = $id;
+        $aReturn =  $printManager->getPrint($oProduit);
+        return new JsonResponse($aReturn);
+    }
+
+    /**
+     * @Route(
+     *     "produit/edit/{id}",
+     *     name="produit_edit",
+     *     methods={"POST","GET"}
+     *     )
+     * @param Produit $id
+     * @param Request $request
+     */
+    public function edit(Produit $id, Request $request)
+    {
+        $oProduit = $id;
+        dump($oProduit); die;
     }
 }

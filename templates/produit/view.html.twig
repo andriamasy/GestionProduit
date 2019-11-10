@@ -37,14 +37,14 @@
                                 <div class="info-box bg-light">
                                     <div class="info-box-content">
                                         <span class="info-box-text text-center text-muted">Poid des Fruit Achetés [kg]</span>
-                                        <span class="info-box-number text-center text-muted mb-0">20 <span>
+                                        <span class="info-box-number text-center text-muted mb-0">20 </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered " >
                                     <thead>
                                     <tr>
                                         <th style="width: 10px">#</th>
@@ -100,6 +100,62 @@
                                             <span class="badge bg-info">{{ produit.qteEau }}</span>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>8.</td>
+                                        <td>Poids Final [Kg] </td>
+                                        <td>
+                                            <span class="badge bg-info">{{ produit.poidFinal }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>9.</td>
+                                        <td>Mesure du PH Avant Traitement Acide Citrique</td>
+                                        <td>
+                                            <span class="badge bg-info">{{ produit.mesurrPHAvant }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>10.</td>
+                                        <td>Quantité d'acide citrique rajouter [gr] </td>
+                                        <td>
+                                            <span class="badge bg-info">{{ produit.qteAcide }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>11.</td>
+                                        <td>Nouvelle Mesure du PH Après Traitement Acide</td>
+                                        <td>
+                                            <span class="badge bg-info">{{ produit.mesurePHApres }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12.</td>
+                                        <td>Mesure du Brix</td>
+                                        <td>
+                                            <span class="badge bg-info">{{ produit.mesureBrix }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>13.</td>
+                                        <td>Quantité Sucre Ajouté [Kg]</td>
+                                        <td>
+                                            <span class="badge bg-info">{{ produit.qteEau }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>14.</td>
+                                        <td>Mesure du Brix Final</td>
+                                        <td>
+                                            <span class="badge bg-info">{{ produit.qteEau }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>15.</td>
+                                        <td>Nombre de boites Produites</td>
+                                        <td>
+                                            <span class="badge bg-info">{{ produit.qteEau }}</span>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -124,17 +180,23 @@
                         </div>
                         <h5 class="mt-5 text-muted">Actions</h5>
                         <div class="mt-1 mb-3">
-                            <a href="#" class="btn btn-sm btn-default">
+                            <a href="#" data-id="{{ produit.id }}" data-title="{{ produit.name }}" class="btn btn-sm btn-default printProduit" >
                                 <i class="fas fa-print"></i>
                                 Imprimer
                             </a>
-                            <a href="#" class="btn btn-sm btn-default">
-                                <i class="fas fa-edit"></i>
-                                Editer
+                            <a href="#" data-id="{{ produit.id }}"  class="btn btn-sm btn-default">
+                                <i class="fas fa-file-export"></i>
+                                Export Pdf
                             </a>
                         </div>
                         <div class="mt-1 mb-3">
-                            <a href="#" class="btn btn-sm btn-danger">
+                            <a href="#"
+                               data-id="{{ produit.id }}"  class="btn btn-sm btn-default"
+                               data-toggle="modal" data-target="#modal-default">
+                                <i class="fas fa-edit"></i>
+                                Editer
+                            </a>
+                            <a href="#" data-id="{{ produit.id }}"  class="btn btn-sm btn-danger">
                                 <i class="fas fa-trash"></i>
                                 Supprimer
                             </a>
@@ -148,6 +210,67 @@
         <!-- /.card -->
 
     </section>
+
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Produit</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Nom</label>
+                                <input value="{{ produit.name }}" type="text" class="form-control" placeholder="Nom Produit">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Reference</label>
+                                <input value="{{ produit.reference }}" type="text" class="form-control" id="exampleInputPassword1" placeholder="Reference">
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-info">Enregistrer</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('.printProduit').on('click', function () {
+                var $id = $(this).attr('data-id');
+                var $url = Routing.generate('api_produit_view', {id:$id});
+                var title = $(this).attr('data-title');
+                $.ajax({
+                    url : $url,
+                    type : "GET",
+                    data  : {},
+                    success: function (data) {
+                        printJS({
+                            printable: data,
+                            properties: ['Nom', 'Valeur'],
+                            type: 'json',
+                            header: '<h2 class="custom-h2">'+title+'</h2>',
+                            style: '.custom-h2 { color: #17a2b8; }',
+                            documentTitle: 'Detail Produit'
+                        })
+                    }
+                })
+            })
+        })
+    </script>
 {% endblock %}
 
 

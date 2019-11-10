@@ -25,6 +25,7 @@
         <!-- summernote -->
         <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
         <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/printJs/print.min.css') }}">
         <!-- Google Font: Source Sans Pro -->
         <!--<link href="{{ asset('css/font-face.css') }}" rel="stylesheet"> -->
         <!-- style personnaliser -->
@@ -295,12 +296,15 @@
         <!-- overlayScrollbars -->
         <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
         <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
+        <script src="{{ asset('plugins/printJs/print.min.js') }}"></script>
         <!-- AdminLTE App -->
         <script src="{{ asset('js/adminlte.js') }}"></script>
         <!-- OPTIONAL SCRIPTS -->
         <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
         <script src="{{ asset('js/demo.js') }}"></script>
         <script src="{{ asset('js/pages/dashboard3.js') }}"></script>
+        <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
         <script>
             $(function() {

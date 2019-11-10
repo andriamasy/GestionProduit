@@ -174,7 +174,6 @@ class ProduitType extends AbstractType
             ->add('nbrBoiteProduite', IntegerType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'step' => 0.1,
                 ],
 
                 'label' => ' Nombre de Boites Produits',
