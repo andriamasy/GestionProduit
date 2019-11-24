@@ -56,6 +56,7 @@ class ProduitType extends AbstractType
                 'class' => Category::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
+                        ->andWhere('c.isActivated = 1')
                         ->orderBy('c.name', 'ASC');
                 },
                 'choice_label' => 'name',
@@ -187,22 +188,11 @@ class ProduitType extends AbstractType
                 ],
                 'label' => ' Descriptions',
             ])
-            ->addEventListener(
-                FormEvents::PRE_SUBMIT,
-                [$this, 'onPreSubmit']
-            )
+
             ;
     }
 
-    public function onPreSubmit(FormEvent $event)
-    {
-        $data = $event->getData();
-        $explode = explode("/",$data['created_at']);
-        $sDate = $explode[2].'-'.$explode[1].'-'.$explode[0];
-        $data['created_at'] = $sDate;
-        $event->setData($data);
 
-    }
 
     public function configureOptions(OptionsResolver $resolver)
     {

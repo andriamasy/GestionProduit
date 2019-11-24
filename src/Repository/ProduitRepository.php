@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Produit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @method Produit|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +48,35 @@ class ProduitRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @param $_query
+     * @return Query
+     */
+    public function search($_query)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->join('p.category', 'c');
+        $qb->andWhere($qb->expr()->like('p.name', $qb->expr()->literal('%'.$_query.'%')));
+        $qb->orWhere($qb->expr()->like('p.reference', $qb->expr()->literal('%'.$_query.'%')));
+        $qb->orWhere($qb->expr()->like('c.name', $qb->expr()->literal('%'.$_query.'%')));
+        $qb->orWhere($qb->expr()->like('p.mesureBrix', $qb->expr()->literal('%'.$_query.'%')));
+        $qb->orWhere($qb->expr()->like('p.mesureBrixFinal', $qb->expr()->literal('%'.$_query.'%')));
+        $qb->orWhere($qb->expr()->like('p.nbrBoiteProduite', $qb->expr()->literal('%'.$_query.'%')));
+        $qb->orWhere($qb->expr()->like('p.MesurrPHAvant', $qb->expr()->literal('%'.$_query.'%')));
+        $qb->orWhere($qb->expr()->like('p.mesurePHApres', $qb->expr()->literal('%'.$_query.'%')));
+        $qb->orWhere($qb->expr()->like('p.nombreTamissage', $qb->expr()->literal('%'.$_query.'%')));
+        $qb->orWhere($qb->expr()->like('p.poidFinal', $qb->expr()->literal('%'.$_query.'%')));
+        $qb->andWhere($qb->expr()->eq('p.isDelete', 0));
+        $aReturn = $qb->getQuery();
+        return $aReturn;
+    }
+
+    public function getAllProduit($_params)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->andWhere($qb->expr()->eq('p.isDelete', ':isDelete'))
+            ->setParameter('isDelete', $_params['isDelete']);
+        return $qb->getQuery();
+    }
 }

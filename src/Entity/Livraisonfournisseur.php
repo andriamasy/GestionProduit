@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LivraisonfournisseurRepository")
  */
-class Livraisonfournisseur
+class Livraisonfournisseur extends Livraison
 {
     /**
      * @ORM\Id()
@@ -29,18 +29,6 @@ class Livraisonfournisseur
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getDateLivraison(): ?\DateTimeInterface
-    {
-        return $this->date_livraison;
-    }
-
-    public function setDateLivraison(\DateTimeInterface $date_livraison): self
-    {
-        $this->date_livraison = $date_livraison;
-
-        return $this;
     }
 
     public function getFournisseur(): ?Fournisseur

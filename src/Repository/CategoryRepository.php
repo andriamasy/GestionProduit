@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query as QueryAlias;
 
 /**
  * @method Category|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +48,14 @@ class CategoryRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return QueryAlias
+     */
+    public function getAllQuery()
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->andWhere('c.isDeleted = 0');
+        return $qb->getQuery();
+    }
 }

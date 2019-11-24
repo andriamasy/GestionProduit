@@ -19,7 +19,7 @@ class Produit
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255 , unique=true)
      */
     private $reference;
 
@@ -129,9 +129,15 @@ class Produit
      */
     private $nbrBoiteProduite;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isDelete;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
+        $this->isDelete = false;
     }
 
     public function getId(): ?int
@@ -432,6 +438,18 @@ class Produit
     public function setNbrBoiteProduite(?int $nbrBoiteProduite): self
     {
         $this->nbrBoiteProduite = $nbrBoiteProduite;
+
+        return $this;
+    }
+
+    public function getIsDelete(): ?bool
+    {
+        return $this->isDelete;
+    }
+
+    public function setIsDelete(bool $isDelete): self
+    {
+        $this->isDelete = $isDelete;
 
         return $this;
     }

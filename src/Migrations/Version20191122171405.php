@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191103143501 extends AbstractMigration
+final class Version20191122171405 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,7 @@ final class Version20191103143501 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE produit CHANGE poid_dufruit_acheter poid_dufruit_acheter INT DEFAULT NULL, CHANGE passage_raffiner passage_raffiner INT DEFAULT NULL, CHANGE passage_emissionneuse passage_emissionneuse INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE category ADD is_activated TINYINT(1) NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +30,6 @@ final class Version20191103143501 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE produit CHANGE poid_dufruit_acheter poid_dufruit_acheter VARCHAR(255) DEFAULT NULL COLLATE utf8mb4_unicode_ci, CHANGE passage_raffiner passage_raffiner VARCHAR(255) DEFAULT NULL COLLATE utf8mb4_unicode_ci, CHANGE passage_emissionneuse passage_emissionneuse VARCHAR(255) DEFAULT NULL COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE category DROP is_activated');
     }
 }

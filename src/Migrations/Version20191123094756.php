@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191105174532 extends AbstractMigration
+final class Version20191123094756 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,7 @@ final class Version20191105174532 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE produit CHANGE mesure_brix_final mesure_brix_final NUMERIC(10, 3) DEFAULT NULL');
+        $this->addSql('ALTER TABLE category ADD is_deleted TINYINT(1) NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +30,6 @@ final class Version20191105174532 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE produit CHANGE mesure_brix_final mesure_brix_final NUMERIC(19, 4) DEFAULT NULL');
+        $this->addSql('ALTER TABLE category DROP is_deleted');
     }
 }

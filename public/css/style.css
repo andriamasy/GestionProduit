@@ -35,3 +35,6 @@ table .table-produit {
 .margin-left-2 {
     margin-left: 24px;
 }
+button.swal2-cancel {
+    margin-right: 20px;
+}

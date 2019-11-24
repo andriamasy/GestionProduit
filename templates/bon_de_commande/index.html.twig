@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bon de Livraison{% endblock %}
+
+{% block content %}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="d-flex align-items-end flex-column">
+                <div class="mt-auto p-2">
+                    <a class="btn btn-info" href="{{ path('command_add') }}">Ajouter Bon de Commande</a>
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Listes des Commandes</h3>
+                            <div class="card-tools">
+                                <form>
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="query" class="form-control float-right" placeholder="Recherche...">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0 scrollTable" >
+                            <table class="table table-hover table-produit">
+                                <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Qte</th>
+                                    <th>Produit</th>
+                                    <th>Date de commande</th>
+                                    <th>Code</th>
+                                    <th>Nom client</th>
+                                    <th>Prenom Client</th>
+                                    <th>Adresse Client</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for commande in commandes %}
+                                    <tr>
+                                        <td>
+                                            <a href="">
+
+                                            </a>
+                                        </td>
+                                        <td></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="project-actions text-right">
+                                            <a class="btn btn-default btn-sm" href="">
+                                                <i class="fas fa-eye">
+                                                </i>
+                                            </a>
+                                            <a class="btn btn-default btn-sm" href="">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                            <a class="btn btn-danger btn-sm deleteProduit" href="#" data-id="{{ commande.id }}">
+                                                <i class="fas fa-trash">
+                                                </i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+                <div class="navigation">
+                    {{ knp_pagination_render(commandes) }}
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+    </section>
+{% endblock %}

@@ -97,14 +97,14 @@
                                         <td>7.</td>
                                         <td>Quantité d'eau Ajoutée [litres] </td>
                                         <td>
-                                            <span class="badge bg-info">{{ produit.qteEau }}</span>
+                                            <span class="badge bg-info">{{ produit.qteEau }} L</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>8.</td>
                                         <td>Poids Final [Kg] </td>
                                         <td>
-                                            <span class="badge bg-info">{{ produit.poidFinal }}</span>
+                                            <span class="badge bg-info">{{ produit.poidFinal }} Kg</span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -118,7 +118,7 @@
                                         <td>10.</td>
                                         <td>Quantité d'acide citrique rajouter [gr] </td>
                                         <td>
-                                            <span class="badge bg-info">{{ produit.qteAcide }}</span>
+                                            <span class="badge bg-info">{{ produit.qteAcide }} gr</span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -139,7 +139,7 @@
                                         <td>13.</td>
                                         <td>Quantité Sucre Ajouté [Kg]</td>
                                         <td>
-                                            <span class="badge bg-info">{{ produit.qteEau }}</span>
+                                            <span class="badge bg-info">{{ produit.qteEau }} Kg</span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -190,14 +190,13 @@
                             </a>
                         </div>
                         <div class="mt-1 mb-3">
-                            <a href="#"
-                               data-id="{{ produit.id }}"  class="btn btn-sm btn-default"
-                               data-toggle="modal" data-target="#modal-default">
+                            <a href="{{ path('produit_edit', {id: produit.id}) }}"
+                               data-id=""  class="btn btn-sm btn-default">
                                 <i class="fas fa-edit"></i>
                                 Editer
                             </a>
-                            <a href="#" data-id="{{ produit.id }}"  class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash"></i>
+                            <a href="#" data-id="{{ produit.id }}"  class="btn btn-sm btn-danger deleteProduit">
+                                <i class="fas fa-trash "></i>
                                 Supprimer
                             </a>
                         </div>
@@ -208,69 +207,8 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-
     </section>
 
-    <div class="modal fade" id="modal-default">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Produit</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form role="form">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Nom</label>
-                                <input value="{{ produit.name }}" type="text" class="form-control" placeholder="Nom Produit">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Reference</label>
-                                <input value="{{ produit.reference }}" type="text" class="form-control" id="exampleInputPassword1" placeholder="Reference">
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                    </form>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-info">Enregistrer</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-{% endblock %}
-{% block javascripts %}
-    <script>
-        $(document).ready(function () {
-            $('.printProduit').on('click', function () {
-                var $id = $(this).attr('data-id');
-                var $url = Routing.generate('api_produit_view', {id:$id});
-                var title = $(this).attr('data-title');
-                $.ajax({
-                    url : $url,
-                    type : "GET",
-                    data  : {},
-                    success: function (data) {
-                        printJS({
-                            printable: data,
-                            properties: ['Nom', 'Valeur'],
-                            type: 'json',
-                            header: '<h2 class="custom-h2">'+title+'</h2>',
-                            style: '.custom-h2 { color: #17a2b8; }',
-                            documentTitle: 'Detail Produit'
-                        })
-                    }
-                })
-            })
-        })
-    </script>
 {% endblock %}
 
 

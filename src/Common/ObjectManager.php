@@ -30,8 +30,11 @@ class ObjectManager
         } catch (\Exception $ex) {
             return false;
         }
+    }
 
-
+    public function getEntityManager()
+    {
+        return $this->em;
     }
 
 }

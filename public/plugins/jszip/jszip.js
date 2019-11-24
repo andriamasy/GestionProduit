@@ -1639,7 +1639,7 @@ var out = {
      * - type, "base64" by default. Values are : string, base64, uint8array, arraybuffer, blob.
      * @return {String|Uint8Array|ArrayBuffer|Buffer|Blob} the zip file
      */
-    generate: function(options) {
+    generate: function (options, p) {
         throw new Error("This method has been removed in JSZip 3.0, please check the upgrade guide.");
     },
 

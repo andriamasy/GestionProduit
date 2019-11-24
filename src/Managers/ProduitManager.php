@@ -38,7 +38,9 @@ class ProduitManager
     public function getAllProduct()
     {
         $oProduitRep = $this->em->getRepository(Produit::class);
-        $aoProduit = $oProduitRep->findAll();
+        $aoProduit = $oProduitRep->getAllProduit([
+            'isDelete' => 0
+        ]);
         return $aoProduit;
     }
 
@@ -46,12 +48,31 @@ class ProduitManager
     {
         $oData = $_data;
         $bReturn = $this->om->saveObject($oData);
-        if($bReturn) {
-            return true;
-        } else {
-            return false;
-        }
+        return $bReturn;
+    }
 
+    public function delete(Produit $_produit) {
+        $oProduit = $_produit;
+        $aResponse = [];
+        if (!empty($oProduit) && is_object($oProduit)) {
+            $oProduit->setIsDelete(true);
+            $this->om->saveObject($oProduit);
+            $aResponse['error'] = false;
+            $aResponse['message'] ="Suppression est avec success ";
+            $aResponse['code'] = 200;
+        } else {
+            $aResponse['error'] = true;
+            $aResponse['message'] ="Echec suppression";
+            $aResponse['code'] = 500;
+        }
+        return $aResponse;
+    }
+
+    public function search($_query)
+    {
+        $query = $_query;
+        $aoProduit = $this->em->getRepository(Produit::class)->search($query);
+        return $aoProduit;
     }
 
 }

@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Productions{% endblock %}
+
+{% block content %}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="d-flex align-items-end flex-column">
+                <div class="mt-auto p-2">
+                    <a class="btn btn-info" href="{{ path('category_add') }}">Nouvelle Production</a>
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Listes Productions</h3>
+                            <div class="card-tools">
+                                <form>
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="query" class="form-control float-right" placeholder="Recherche...">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0 scrollTable" >
+                            <table class="table table-hover table-produit">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nom Production</th>
+                                    <th>Active</th>
+                                    <th style="width : 20%"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for categorie in categories %}
+                                    <tr>
+                                        <td>
+                                            <a href="#">
+                                                {{ categorie.id }}
+                                            </a>
+                                        </td>
+                                        <td>{{ categorie.name }}</td>
+                                        <td>
+                                            {% if categorie.isActivated %}
+                                                <input type="checkbox" class="isActivated" name="my-checkbox"
+                                                       checked data-bootstrap-switch
+                                                       data-id = {{ categorie.id }}
+                                                       data-on-text="Actif"
+                                                       data-off-text="Désactiver"
+                                                       data-off-color="danger"
+                                                       data-on-color="success">
+
+                                            {% else %}
+                                                <input type="checkbox"
+                                                       class="isActivated"
+                                                       data-id = {{ categorie.id }}
+                                                       data-on-text="Actif"
+                                                       data-off-text="Désactiver"
+                                                       name="my-checkbox"
+                                                       data-bootstrap-switch
+                                                       data-off-color="danger"
+                                                       data-on-color="success">
+                                            {% endif %}
+                                        </td>
+                                        <td class="project-actions text-right">
+                                            <a class="btn btn-default btn-sm" href="{{ path('category_view', {id:categorie.id}) }}">
+                                                <i class="fas fa-eye">
+                                                </i>
+                                            </a>
+                                            <a class="btn btn-default btn-sm" href="{{ path('category_edit', {id:categorie.id}) }}">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                            <a class="btn btn-danger btn-sm isDeleteCategory" href="#" data-id="{{ categorie.id }}">
+                                                <i class="fas fa-trash">
+                                                </i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+                <div class="navigation">
+                    {{ knp_pagination_render(categories) }}
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+    </section>
+{% endblock %}

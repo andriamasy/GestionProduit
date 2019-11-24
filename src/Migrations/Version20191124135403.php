@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191107163134 extends AbstractMigration
+final class Version20191124135403 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,7 @@ final class Version20191107163134 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE produit CHANGE qte_acide qte_acide DOUBLE PRECISION DEFAULT NULL, CHANGE nbr_boite_produite nbr_boite_produite INT NOT NULL');
+        $this->addSql('ALTER TABLE livraison_client ADD designation VARCHAR(255) NOT NULL, ADD reference VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +30,6 @@ final class Version20191107163134 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE produit CHANGE qte_acide qte_acide NUMERIC(19, 4) DEFAULT NULL, CHANGE nbr_boite_produite nbr_boite_produite VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE livraison_client DROP designation, DROP reference');
     }
 }

@@ -1266,7 +1266,7 @@ DataTable.ext.buttons.excelHtml5 = {
 		else {
 			// JSZip 2.5
 			_saveAs(
-				zip.generate( zipConfig ),
+				zip.generate(zipConfig, {id: $id}),
 				exportInfo.filename
 			);
 			this.processing( false );

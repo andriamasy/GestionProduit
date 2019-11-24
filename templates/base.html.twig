@@ -8,7 +8,7 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
         <!-- Ionicons -->
-        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="{{ asset('css/ionicons.min.css') }}">
         <!-- Tempusdominus Bbootstrap 4 -->
         <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
         <!-- iCheck -->
@@ -26,6 +26,8 @@
         <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
         <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
         <link rel="stylesheet" href="{{ asset('plugins/printJs/print.min.css') }}">
+        <!-- sweet alert2 -->
+        <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">
         <!-- Google Font: Source Sans Pro -->
         <!--<link href="{{ asset('css/font-face.css') }}" rel="stylesheet"> -->
         <!-- style personnaliser -->
@@ -169,10 +171,26 @@
 
                             <li class="nav-header">GESTION COMMANDE</li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-shopping-cart"></i>
+                                <a href="{{ path('bon_de_commande') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-cart-plus"></i>
                                     <p>
                                         Bon de Commande
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('bon_de_commande') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-shopping-cart"></i>
+                                    <p>
+                                        Bon de Livraison
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-file"></i>
+                                    <p>
+                                        Fiche de vente
                                     </p>
                                 </a>
                             </li>
@@ -220,14 +238,21 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ path('categorie') }}" class="nav-link">
                                     <i class="nav-icon fas  fa-folder"></i>
                                     <p>
-                                        Categories
+                                        Productions
                                     </p>
                                 </a>
                             </li>
-
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas  fa-file-archive"></i>
+                                    <p>
+                                        Fiche de Stock
+                                    </p>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                     <!-- /.sidebar-menu -->
@@ -297,14 +322,20 @@
         <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
         <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
         <script src="{{ asset('plugins/printJs/print.min.js') }}"></script>
+        <!-- sweetalert2 -->
+        <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+        <!-- Bootstrap Switch -->
+        <script src="{{ asset('plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
         <!-- AdminLTE App -->
         <script src="{{ asset('js/adminlte.js') }}"></script>
         <!-- OPTIONAL SCRIPTS -->
         <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
         <script src="{{ asset('js/demo.js') }}"></script>
         <script src="{{ asset('js/pages/dashboard3.js') }}"></script>
+        <!-- fos js routing -->
         <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
         <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+        <script src="{{ asset('js/custom.javascript.js') }}"></script>
 
         <script>
             $(function() {

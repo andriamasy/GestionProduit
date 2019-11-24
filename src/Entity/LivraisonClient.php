@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LivraisonClientRepository")
  */
-class LivraisonClient
+class LivraisonClient extends Livraison
 {
     /**
      * @ORM\Id()
@@ -17,14 +17,10 @@ class LivraisonClient
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="datetime")
      */
     private $date_livraison;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $destinateur;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\commande", inversedBy="livraisonclients")
@@ -34,30 +30,6 @@ class LivraisonClient
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getDateLivraison(): ?string
-    {
-        return $this->date_livraison;
-    }
-
-    public function setDateLivraison(string $date_livraison): self
-    {
-        $this->date_livraison = $date_livraison;
-
-        return $this;
-    }
-
-    public function getDestinateur(): ?string
-    {
-        return $this->destinateur;
-    }
-
-    public function setDestinateur(string $destinateur): self
-    {
-        $this->destinateur = $destinateur;
-
-        return $this;
     }
 
     public function getCommande(): ?commande

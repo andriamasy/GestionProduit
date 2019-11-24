@@ -47,4 +47,10 @@ class CommandeRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getAll()
+    {
+        $qb = $this->createQueryBuilder('c');
+        return $qb->getQuery();
+    }
 }
