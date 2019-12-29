@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +48,17 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @param $_role
+     * @return Query
+     */
+    public function getUserByRole($_role)
+    {
+        $qb = $this->createQueryBuilder('u');
+       // $qb->expr()->like('u.roles', $qb->expr()->literal('""%'. $_role.'%"'));
+       $qb->andWhere('u.roles LIKE :role');
+       $qb->setParameter(':role','%' .$_role .'%');
+        return $qb->getQuery();
+    }
 }

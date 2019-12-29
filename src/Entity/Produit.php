@@ -39,11 +39,6 @@ class Produit
     private $precaution;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Commande", mappedBy="produit")
-     */
-    private $commandes;
-
-    /**
      * @var Category
      * @ORM\ManyToOne(targetEntity="App\Entity\Category")
      */
@@ -134,10 +129,22 @@ class Produit
      */
     private $isDelete;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommandProduit", mappedBy="produit")
+     */
+    private $commandProduits;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $prix;
+
+
+
     public function __construct()
     {
-        $this->commandes = new ArrayCollection();
         $this->isDelete = false;
+        $this->commandProduits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -189,34 +196,6 @@ class Produit
     public function setPrecaution(?string $precaution): self
     {
         $this->precaution = $precaution;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Commande[]
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
-
-    public function addCommande(Commande $commande): self
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes[] = $commande;
-            $commande->addProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commande $commande): self
-    {
-        if ($this->commandes->contains($commande)) {
-            $this->commandes->removeElement($commande);
-            $commande->removeProduit($this);
-        }
 
         return $this;
     }
@@ -453,4 +432,50 @@ class Produit
 
         return $this;
     }
+
+    /**
+     * @return Collection|CommandProduit[]
+     */
+    public function getCommandProduits(): Collection
+    {
+        return $this->commandProduits;
+    }
+
+    public function addCommandProduit(CommandProduit $commandProduit): self
+    {
+        if (!$this->commandProduits->contains($commandProduit)) {
+            $this->commandProduits[] = $commandProduit;
+            $commandProduit->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandProduit(CommandProduit $commandProduit): self
+    {
+        if ($this->commandProduits->contains($commandProduit)) {
+            $this->commandProduits->removeElement($commandProduit);
+            // set the owning side to null (unless already changed)
+            if ($commandProduit->getProduit() === $this) {
+                $commandProduit->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(?float $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+
+
 }

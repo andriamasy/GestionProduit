@@ -221,10 +221,18 @@
                             </li>
                             <li class="nav-header">GESTION UTILISATEUR</li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ path('user') }}" class="nav-link">
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>
                                         Utilisateurs
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('client') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-user-friends"></i>
+                                    <p>
+                                        Clients
                                     </p>
                                 </a>
                             </li>
@@ -372,6 +380,7 @@
             {% endfor %}
             {% endfor %}
         </script>
+        {% block extra_js %} {% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

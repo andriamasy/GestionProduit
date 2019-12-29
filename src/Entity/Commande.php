@@ -19,17 +19,13 @@ class Commande
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string", unique=true)
      */
     private $reference;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $quantite;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", unique=true)
      */
     private $code;
 
@@ -38,10 +34,6 @@ class Commande
      */
     private $user;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Produit", inversedBy="commandes")
-     */
-    private $produit;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\LivraisonClient", mappedBy="commande")
@@ -49,14 +41,35 @@ class Commande
     private $livraisonclients;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $created_at;
 
+
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="App\Entity\CommandProduit", mappedBy="command" , cascade={"persist", "remove"})
+     */
+    private $commandProduits;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isPaid;
+
+
     public function __construct()
     {
-        $this->produit = new ArrayCollection();
         $this->livraisonclients = new ArrayCollection();
+        $this->commandProduits = new ArrayCollection();
+        
     }
 
     public function getId(): ?int
@@ -64,36 +77,25 @@ class Commande
         return $this->id;
     }
 
-    public function getReference(): ?\DateTimeInterface
+    public function getReference(): ?string
     {
         return $this->reference;
     }
 
-    public function setReference(\DateTimeInterface $reference): self
+    public function setReference(string $reference): self
     {
         $this->reference = $reference;
 
         return $this;
     }
 
-    public function getQuantite(): ?int
-    {
-        return $this->quantite;
-    }
 
-    public function setQuantite(int $quantite): self
-    {
-        $this->quantite = $quantite;
-
-        return $this;
-    }
-
-    public function getCode(): ?int
+    public function getCode(): ?string
     {
         return $this->code;
     }
 
-    public function setCode(int $code): self
+    public function setCode(string $code): self
     {
         $this->code = $code;
 
@@ -108,32 +110,6 @@ class Commande
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Produit[]
-     */
-    public function getProduit(): Collection
-    {
-        return $this->produit;
-    }
-
-    public function addProduit(Produit $produit): self
-    {
-        if (!$this->produit->contains($produit)) {
-            $this->produit[] = $produit;
-        }
-
-        return $this;
-    }
-
-    public function removeProduit(Produit $produit): self
-    {
-        if ($this->produit->contains($produit)) {
-            $this->produit->removeElement($produit);
-        }
 
         return $this;
     }
@@ -169,6 +145,19 @@ class Commande
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
@@ -177,6 +166,51 @@ class Commande
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+
+
+    /**
+     * @return Collection|CommandProduit[]
+     */
+    public function getCommandProduits(): Collection
+    {
+        return $this->commandProduits;
+    }
+
+    public function addCommandProduit(CommandProduit $commandProduit): self
+    {
+        if (!$this->commandProduits->contains($commandProduit)) {
+            $this->commandProduits[] = $commandProduit;
+            $commandProduit->setCommand($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandProduit(CommandProduit $commandProduit): self
+    {
+        if ($this->commandProduits->contains($commandProduit)) {
+            $this->commandProduits->removeElement($commandProduit);
+            // set the owning side to null (unless already changed)
+            if ($commandProduit->getCommand() === $this) {
+                $commandProduit->setCommand(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getIsPaid(): ?bool
+    {
+        return $this->isPaid;
+    }
+
+    public function setIsPaid(?bool $isPaid): self
+    {
+        $this->isPaid = $isPaid;
 
         return $this;
     }

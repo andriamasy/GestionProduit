@@ -2,26 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Commande;
+use App\Entity\CommandProduit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\ORM\Query;
 
 /**
- * @method Commande|null find($id, $lockMode = null, $lockVersion = null)
- * @method Commande|null findOneBy(array $criteria, array $orderBy = null)
- * @method Commande[]    findAll()
- * @method Commande[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method CommandProduit|null find($id, $lockMode = null, $lockVersion = null)
+ * @method CommandProduit|null findOneBy(array $criteria, array $orderBy = null)
+ * @method CommandProduit[]    findAll()
+ * @method CommandProduit[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CommandeRepository extends ServiceEntityRepository
+class CommandProduitRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Commande::class);
+        parent::__construct($registry, CommandProduit::class);
     }
 
     // /**
-    //  * @return Commande[] Returns an array of Commande objects
+    //  * @return CommandProduit[] Returns an array of CommandProduit objects
     //  */
     /*
     public function findByExampleField($value)
@@ -38,7 +37,7 @@ class CommandeRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Commande
+    public function findOneBySomeField($value): ?CommandProduit
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')
@@ -48,13 +47,4 @@ class CommandeRepository extends ServiceEntityRepository
         ;
     }
     */
-
-    /**
-     * @return Query
-     */
-    public function getAll()
-    {
-        $qb = $this->createQueryBuilder('c');
-        return $qb->getQuery();
-    }
 }

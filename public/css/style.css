@@ -38,3 +38,18 @@ table .table-produit {
 button.swal2-cancel {
     margin-right: 20px;
 }
+
+.error-validation {
+    color: #a71d2a;
+}
+
+.error-validation li {
+    list-style: none;
+}
+
+.add-produit {
+    margin: 0.5rem;
+}
+.delete-produit {
+    margin: 0.5rem;
+}

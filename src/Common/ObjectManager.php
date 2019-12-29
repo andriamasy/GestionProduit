@@ -28,6 +28,7 @@ class ObjectManager
             $this->em->flush();
             return true;
         } catch (\Exception $ex) {
+            dump($ex); die;
             return false;
         }
     }

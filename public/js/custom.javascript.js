@@ -39,6 +39,21 @@ $(document).ready(function() {
 });
 
 /**
+ * Date picker
+ */
+$(document).ready(function () {
+    //Date range picker
+    $('.date_creation').datepicker(
+        {
+            format: 'yyyy-mm-dd',
+            orientation: "bottom auto",
+            autoclose: true,
+            startDate: -Infinity
+        }
+    );
+});
+
+/**
  * print file
  */
 $(document).ready(function () {

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Commande;
+use App\Entity\CommandProduit;
 use App\Form\CommandType;
 use App\Managers\BonDeCommandeManager;
 use Knp\Component\Pager\PaginatorInterface;
@@ -38,8 +39,8 @@ class BonDeCommandeController extends AbstractController
             5 /*limit per page*/
         );
         return $this->render('bon_de_commande/index.html.twig', [
-            'titre' => 'Liste Bon de Commande',
-            'bande' => 'Liste Bon de Commande',
+            'titre' => 'Listes Bon de Commande',
+            'bande' => 'Listes Bon de Commande',
             'commandes' => $pagination,
         ]);
     }
@@ -53,6 +54,17 @@ class BonDeCommandeController extends AbstractController
     {
         $oCommand = new Commande();
         $form = $this->createForm(CommandType::class, $oCommand);
+        $form->handleRequest($request);
+       // dump($oCommand); die;
+        if($form->isSubmitted() && $form->isValid()) {
+            dump($oCommand);
+            $bResponse = $this->commandeManager->save($oCommand);
+            if($bResponse) {
+                return $this->redirectToRoute('bon_de_commande');
+            } else {
+                $this->addFlash('error', 'Enregistrement n\'est pas effectué correctement');
+            }
+        }
         return $this->render('bon_de_commande/add.html.twig', [
             'form' => $form->createView(),
             'titre' => 'Ajouter Bon de Commande',
@@ -60,5 +72,48 @@ class BonDeCommandeController extends AbstractController
             'routeParent' => 'bon_de_commande',
             'routeNameParent' => 'Listes des bon commandes',
         ]);
+    }
+
+    /**
+     * @Route("/command/edit/{id}", name="command_edit", methods={"GET", "POST"})
+     * @param Request $request
+     * @param Commande $id
+     * @return Response
+     */
+    public function edit(Request $request, Commande $id)
+    {
+        $oCommand = $id;
+        $form = $this->createForm(CommandType::class, $oCommand);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bResponse = $this->commandeManager->save($oCommand);
+            if($bResponse) {
+                return $this->redirectToRoute('bon_de_commande');
+            }
+        }
+        return $this->render('bon_de_commande/add.html.twig', [
+            'form' => $form->createView(),
+            'titre' => 'Edit Bon de Commande',
+            'bande' => 'Edit Bon de Commande',
+            'routeParent' => 'bon_de_commande',
+            'routeNameParent' => 'Listes des bon commandes',
+        ]);
+    }
+
+    /**
+     * @Route("/command/view/{id}", name="command_view", methods={"GET"})
+     * @param Commande $id
+     * @return Response
+     */
+    public function view(Commande $id)
+    {
+        $oCommand = $id;
+        return $this->render('bon_de_commande/view.html.twig',[
+                'command' => $oCommand,
+                'titre' => 'Detail Bon de Commande',
+                'bande' => 'Detail Bon de Commande',
+                'routeParent' => 'bon_de_commande',
+                'routeNameParent' => 'Listes des bon commandes',
+            ]);
     }
 }

@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bon de Livraison{% endblock %}
+{% block title %}Listes Utilisateurs{% endblock %}
 
 {% block content %}
     <section class="content">
         <div class="container-fluid">
             <div class="d-flex align-items-end flex-column">
                 <div class="mt-auto p-2">
-                    <a class="btn btn-info" href="{{ path('command_add') }}">Ajouter Bon de Commande</a>
+                    <a class="btn btn-info" href="{{ path('user_add') }}">Ajouter Nouveau Utilisateur</a>
                 </div>
             </div>
             <!-- /.row -->
@@ -15,7 +15,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Listes des Commandes</h3>
+                            <h3 class="card-title">Listes les utilisateur</h3>
                             <div class="card-tools">
                                 <form>
                                     <div class="input-group input-group-sm" style="width: 150px;">
@@ -32,44 +32,41 @@
                             <table class="table table-hover table-produit">
                                 <thead>
                                 <tr>
-                                    <th>Reference</th>
-                                    <th>Produit</th>
-                                    <th>Date de commande</th>
-                                    <th>Code</th>
-                                    <th>Nom client</th>
-                                    <th>Prenom Client</th>
-                                    <th>Adresse Client</th>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Adresse</th>
+                                    <th>Nom d'utilisateur</th>
+                                    <th>Email</th>
+                                    <th>Roles</th>
+                                    <th style="width : 20%"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for commande in commandes %}
+                                {% for user in users %}
                                     <tr>
                                         <td>
                                             <a href="#">
-                                                {{ commande.reference }}
+                                                {{ user.firstname }}
                                             </a>
                                         </td>
+                                        <td> {{ user.lastname }}</td>
+                                        <td class="text-center">{{ user.adresse }}</td>
+                                        <td class="text-center">{{ user.username }}</td>
+                                        <td class="text-center"> {{ user.email }}</td>
                                         <td class="text-center">
-
+                                            {% for role in user.roles %}
+                                                <span class="badge badge-success">{{ role }}</span>
+                                            {% endfor %}
                                         </td>
-                                        <td class="text-center">
-                                            {{ commande.createdAt | date('d/m/Y') }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ commande.code }}
-                                        </td>
-                                        <td class="text-center"> {{ commande.user.firstname }} </td>
-                                        <td class="text-center">{{ commande.user.lastname }}</td>
-                                        <td class="text-center">{{ commande.user.adresse }}</td>
                                         <td class="project-actions text-right">
-                                            <a class="btn btn-default btn-sm" href="{{ path('command_view',{id : commande.id}) }}">
+                                            <a class="btn btn-default btn-sm" href="#">
                                                 <i class="fas fa-eye">
                                                 </i>
                                             </a>
-                                            <a class="btn btn-default btn-sm" href="{{ path('command_edit', {id : commande.id}) }}">
+                                            <a class="btn btn-default btn-sm" href="#">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
-                                            <a class="btn btn-danger btn-sm deleteProduit" href="#" data-id="{{ commande.id }}">
+                                            <a class="btn btn-danger btn-sm deleteProduit" href="#" data-id="#">
                                                 <i class="fas fa-trash">
                                                 </i>
                                             </a>
@@ -86,7 +83,7 @@
 
                 </div>
                 <div class="navigation">
-                    {{ knp_pagination_render(commandes) }}
+                    {{ knp_pagination_render(users) }}
                 </div>
             </div>
             <!-- /.row -->
