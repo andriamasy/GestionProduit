@@ -33,12 +33,13 @@
                                 <thead>
                                 <tr>
                                     <th>Reference</th>
-                                    <th>Produit</th>
+                                    <th>Produits</th>
                                     <th>Date de commande</th>
                                     <th>Code</th>
                                     <th>Nom client</th>
                                     <th>Prenom Client</th>
                                     <th>Adresse Client</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -50,7 +51,12 @@
                                             </a>
                                         </td>
                                         <td class="text-center">
-
+                                            {% for commandProduit in commande.commandProduits %}
+                                            <span class="badge badge-success">
+                                                {{ commandProduit.produit.name }}
+                                            </span>
+                                                <br>
+                                            {% endfor %}
                                         </td>
                                         <td class="text-center">
                                             {{ commande.createdAt | date('d/m/Y') }}
@@ -63,15 +69,16 @@
                                         <td class="text-center">{{ commande.user.adresse }}</td>
                                         <td class="project-actions text-right">
                                             <a class="btn btn-default btn-sm" href="{{ path('command_view',{id : commande.id}) }}">
-                                                <i class="fas fa-eye">
-                                                </i>
+                                                <i class="fas fa-eye"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm" href="{{ path('command_edit', {id : commande.id}) }}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
                                             <a class="btn btn-danger btn-sm deleteProduit" href="#" data-id="{{ commande.id }}">
-                                                <i class="fas fa-trash">
-                                                </i>
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                            <a class="btn btn-default btn-sm " href="#" data-id="{{ commande.id }}">
+                                                <i class="fas fa-recycle"></i>
                                             </a>
                                         </td>
                                     </tr>

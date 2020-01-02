@@ -34,7 +34,7 @@
                                     <strong>Admin, Inc.</strong><br>
                                     795 Folsom Ave, Suite 600<br>
                                     Marosokatra Ampasimanjeva, CA 94107<br>
-                                    Phone: +261 34 81 993 82<br>
+                                    Tel: +261 34 81 993 82<br>
                                     Email: info@marosokatra.com
                                 </address>
                             </div>
@@ -43,9 +43,8 @@
                                 To
                                 <address>
                                     <strong>{{ command.user.firstname  }} - {{ command.user.lastname }}</strong><br>
-                                    795 Folsom Ave, Suite 600<br>
                                     {{ command.user.adresse }}<br>
-                                    Phone: (555) 539-1037<br>
+                                    Tel: {{ command.user.phone }}<br>
                                     Email: {{ command.user.email }}
                                 </address>
                             </div>
@@ -56,7 +55,11 @@
                                 <b>ID:</b> {{ command.id }}<br>
                                 <b>Payment Due:</b> {{ command.createdAt | date('d/m/Y')}}<br>
                                 <b>Code:</b> {{ command.code }} <br>
-                                <b>Payement:</b> <span class="badge badge-success"><i class="fas fa-check"></i></span>
+                                <b>Payement:</b> {% if command.isPaid %}
+                                    <span class="badge badge-success"><i class="fas fa-check"></i></span>
+                                {% else %}
+                                    <span class="badge badge-danger"><i class="fas fa-times"></i></span>
+                                {% endif %}
                             </div>
                             <!-- /.col -->
                         </div>
@@ -68,21 +71,23 @@
                                 <table class="table table-striped">
                                     <thead>
                                     <tr>
-                                        <th>Qte</th>
-                                        <th>Produit</th>
                                         <th>Reference #</th>
+                                        <th>Produit</th>
+                                        <th>Qte</th>
                                         <th>Déscription</th>
+                                        <th>Prix Unitaire</th>
                                         <th>Montant</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {% for commandProduits in command.commandProduits %}
                                         <tr>
-                                            <td>{{ commandProduits.qte }}</td>
+                                            <td>{{ command.reference }} </td>
                                             <td>{{ commandProduits.produit.category.name }}</td>
-                                            <td>{{ command.reference }}</td>
+                                            <td>{{ commandProduits.qte }}</td>
                                             <td>{{ command.description }}</td>
-                                            <td>{{ commandProduits.produit.prix }}</td>
+                                            <td>{{ commandProduits.produit.category.prix }} Ar</td>
+                                            <td>{{ montant(commandProduits.produit.category.prix ,commandProduits.qte)}} Ar</td>
                                         </tr>
                                     {% endfor %}
 
@@ -100,9 +105,7 @@
                                 <img src="{{ asset('img/mvola.png') }}" alt="Mvola">
                                 ou <span>Espèce</span>
                                 <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
-                                    plugg
-                                    dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+
                                 </p>
                             </div>
                             <!-- /.col -->
@@ -112,16 +115,18 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <tr>
-                                            <th style="width:50%">Subtotal:</th>
-                                            <td>$250.30</td>
+                                            <th style="width:50%">Montant Total:</th>
+                                            <td>
+                                               <b>{{ montantTotal(command.commandProduits) }} Ar</b>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>Tax (9.3%)</th>
-                                            <td>$10.34</td>
+                                            <th>Tax ({{ taxe() }} %)</th>
+                                            <td>{{ taxe() }} Ar</td>
                                         </tr>
                                         <tr>
                                             <th>Total:</th>
-                                            <td>$265.24</td>
+                                            <td><b>{{ montantTotal(command.commandProduits) }} Ar</b></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -133,12 +138,14 @@
                         <!-- this row will not appear when printing -->
                         <div class="row no-print">
                             <div class="col-12">
-                                <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-                                <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-                                    Payment
-                                </button>
-                                <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                                    <i class="fas fa-download"></i> Generate PDF
+                                <a href="#" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                                {% if not command.isPaid %}
+                                    <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i>
+                                        Soumettre le paiement
+                                    </button>
+                                {% endif %}
+                                <button type="button" class="btn btn-info float-right" style="margin-right: 5px;">
+                                    <i class="fas fa-download"></i> Generer PDF
                                 </button>
                             </div>
                         </div>

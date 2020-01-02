@@ -52,6 +52,12 @@ class ClientType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+            ->add('phone', TextType::class, [
+                'label' => 'Numéro Télephone',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
 
             ->add('password', HiddenType::class, [
                 'data' => '123456',

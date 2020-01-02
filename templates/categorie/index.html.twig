@@ -34,7 +34,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Nom Production</th>
-                                    <th>Active</th>
+                                    <th>Prix</th>
+                                    <th>Activer / Désactiver</th>
                                     <th style="width : 20%"></th>
                                 </tr>
                                 </thead>
@@ -47,6 +48,7 @@
                                             </a>
                                         </td>
                                         <td>{{ categorie.name }}</td>
+                                        <td>{{ categorie.prix }} <b>Ar</b></td>
                                         <td>
                                             {% if categorie.isActivated %}
                                                 <input type="checkbox" class="isActivated" name="my-checkbox"

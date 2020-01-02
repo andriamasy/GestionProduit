@@ -38,12 +38,23 @@ class Category
      */
     private $ficheDeVentes;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $prix;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $taxe;
+
 
     public function __construct()
     {
         $this->produits = new ArrayCollection();
         $this->isDeleted = false;
         $this->ficheDeVentes = new ArrayCollection();
+        $this->taxe = 0;
     }
 
     public function getId(): ?int
@@ -122,6 +133,30 @@ class Category
     {
         // TODO: Implement __toString() method.
         return $this->getName();
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getTaxe(): ?float
+    {
+        return $this->taxe;
+    }
+
+    public function setTaxe(?float $taxe): self
+    {
+        $this->taxe = $taxe;
+
+        return $this;
     }
 
 }

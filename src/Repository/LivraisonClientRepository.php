@@ -47,4 +47,10 @@ class LivraisonClientRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getAll()
+    {
+        return $this->createQueryBuilder('l')
+            ->getQuery();
+    }
 }
