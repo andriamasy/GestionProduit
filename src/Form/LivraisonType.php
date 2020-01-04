@@ -17,27 +17,19 @@ class LivraisonType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
-            ->add('date_livraison', DateTimeType::class,[
-                'widget' => 'single_text',
+            ->add('dateLivraison', DateTimeType::class,[
+                //'widget' => 'single_text',
                 'html5' => false,
                 'attr' => [
-                    'class' => 'form-control date_creation',
+                    'class' => 'form-control',
                 ],
                 'label' => ' Date de Livraison',
 
             ])
-            ->add('destination', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
+
             ->add('transporteur',TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('designation',TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ]

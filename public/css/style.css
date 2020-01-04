@@ -53,3 +53,18 @@ button.swal2-cancel {
 .delete-produit {
     margin: 0.5rem;
 }
+
+.bottom-0 {
+    bottom: 0px;
+}
+
+.bottom-1 {
+    bottom: 10%;
+}
+
+/**
+* message alert
+ */
+label.command-reference + ul , label.command-code + ul{
+    display: none;
+}

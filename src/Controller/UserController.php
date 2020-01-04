@@ -37,6 +37,7 @@ class UserController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $aoUsers = $this->userManager->getUserByRole('_ADMIN');
         $pagination = $paginator->paginate(
             $aoUsers, /* query NOT result */
@@ -56,6 +57,7 @@ class UserController extends AbstractController
      */
     public function addUser(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $oUser = new User();
         $form = $this->createForm(UserType::class, $oUser);
         return $this->render('user/add.html.twig', [
@@ -81,6 +83,7 @@ class UserController extends AbstractController
      */
     public function client(Request $request, PaginatorInterface $paginator)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $aoUsers = $this->userManager->getUserByRole('_CUSTOMER');
         $pagination = $paginator->paginate(
             $aoUsers, /* query NOT result */
@@ -102,6 +105,7 @@ class UserController extends AbstractController
      */
     public function addClient(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $oUser = new User();
         $form = $this->createForm(ClientType::class, $oUser);
         $form->handleRequest($request);
@@ -133,6 +137,7 @@ class UserController extends AbstractController
      */
     public function editClient(Request $request, User $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $oUser = $id;
         $form = $this->createForm(ClientType::class, $oUser);
         $form->handleRequest($request);

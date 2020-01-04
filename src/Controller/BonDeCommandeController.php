@@ -7,6 +7,7 @@ use App\Entity\CommandProduit;
 use App\Form\CommandType;
 use App\Managers\BonDeCommandeManager;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +33,7 @@ class BonDeCommandeController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $aoCommand = $this->commandeManager->getAllCommaand();
         $pagination = $paginator->paginate(
             $aoCommand, /* query NOT result */
@@ -52,17 +54,18 @@ class BonDeCommandeController extends AbstractController
      */
     public function addCommand(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $oCommand = new Commande();
         $form = $this->createForm(CommandType::class, $oCommand);
         $form->handleRequest($request);
        // dump($oCommand); die;
         if($form->isSubmitted() && $form->isValid()) {
-            dump($oCommand);
-            $bResponse = $this->commandeManager->save($oCommand);
-            if($bResponse) {
+            $aResponse = $this->commandeManager->save($oCommand);
+            if($aResponse['code'] == 200) {
+                $this->addFlash('success', 'Ajout de bon commande est avec Succèss');
                 return $this->redirectToRoute('bon_de_commande');
             } else {
-                $this->addFlash('error', 'Enregistrement n\'est pas effectué correctement');
+                $this->addFlash('error', $aResponse['message']);
             }
         }
         return $this->render('bon_de_commande/add.html.twig', [
@@ -82,13 +85,17 @@ class BonDeCommandeController extends AbstractController
      */
     public function edit(Request $request, Commande $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $oCommand = $id;
         $form = $this->createForm(CommandType::class, $oCommand);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $bResponse = $this->commandeManager->save($oCommand);
-            if($bResponse) {
+            $aResponse = $this->commandeManager->save($oCommand);
+            if($aResponse['code'] == 200) {
+                $this->addFlash('success', 'Edit de bon commande est avec Succèss');
                 return $this->redirectToRoute('bon_de_commande');
+            }  else {
+                $this->addFlash('error', $aResponse['message']);
             }
         }
         return $this->render('bon_de_commande/add.html.twig', [
@@ -107,6 +114,7 @@ class BonDeCommandeController extends AbstractController
      */
     public function view(Commande $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $oCommand = $id;
         return $this->render('bon_de_commande/view.html.twig',[
                 'command' => $oCommand,
@@ -115,5 +123,20 @@ class BonDeCommandeController extends AbstractController
                 'routeParent' => 'bon_de_commande',
                 'routeNameParent' => 'Listes des bon commandes',
             ]);
+    }
+
+    /**
+     * @Route(
+     *     "/api/command/stat",
+     *     name="api_command_stat",
+     *     methods={"GET"},
+     *     options={"expose" = true}
+     * )
+     * @return JsonResponse
+     */
+    public function getStatProduits()
+    {
+        $aoCommand = $this->commandeManager->getStatCommand();
+        return new JsonResponse($aoCommand);
     }
 }

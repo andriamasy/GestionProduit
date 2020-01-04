@@ -134,11 +134,27 @@ class Produit
      */
     private $commandProduits;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $initNombreproduit;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\BarCode", mappedBy="produit")
+     */
+    private $barCodes;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $code;
+
 
     public function __construct()
     {
         $this->isDelete = false;
         $this->commandProduits = new ArrayCollection();
+        $this->barCodes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -454,6 +470,61 @@ class Produit
                 $commandProduit->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInitNombreproduit(): ?int
+    {
+        return $this->initNombreproduit;
+    }
+
+    public function setInitNombreproduit(int $initNombreproduit): self
+    {
+        $this->initNombreproduit = $initNombreproduit;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BarCode[]
+     */
+    public function getBarCodes(): Collection
+    {
+        return $this->barCodes;
+    }
+
+    public function addBarCode(BarCode $barCode): self
+    {
+        if (!$this->barCodes->contains($barCode)) {
+            $this->barCodes[] = $barCode;
+            $barCode->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBarCode(BarCode $barCode): self
+    {
+        if ($this->barCodes->contains($barCode)) {
+            $this->barCodes->removeElement($barCode);
+            // set the owning side to null (unless already changed)
+            if ($barCode->getProduit() === $this) {
+                $barCode->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }

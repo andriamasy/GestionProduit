@@ -61,4 +61,15 @@ class UserRepository extends ServiceEntityRepository
        $qb->setParameter(':role','%' .$_role .'%');
         return $qb->getQuery();
     }
+
+    /**
+     * @return User
+     */
+    public function getAllClient()
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb->andWhere($qb->expr()->like('u.roles', $qb->expr()->literal('%ROLE_CUSTOMER%')));
+        $aoResult = $qb->getQuery()->getResult();
+        return $aoResult;
+    }
 }

@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "friendsofsymfony/jsrouting-bundle": "^2.4",
         "knplabs/knp-paginator-bundle": "^4.1",
+        "picqer/php-barcode-generator": "^0.4.0",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.3.*",
         "symfony/console": "4.3.*",
@@ -29,6 +30,7 @@
         "symfony/validator": "4.3.*",
         "symfony/web-link": "4.3.*",
         "symfony/yaml": "4.3.*",
+        "tecnickcom/tcpdf": "^6.3",
         "zendframework/zend-barcode": "^2.7"
     },
     "require-dev": {

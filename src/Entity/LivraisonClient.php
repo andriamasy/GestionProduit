@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class LivraisonClient extends Livraison
 {
     /**
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -17,20 +19,15 @@ class LivraisonClient extends Livraison
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $date_livraison;
-
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\commande", inversedBy="livraisonclients")
      */
     private $commande;
 
-    public function getId(): ?int
+    public function getId(): ? int
     {
         return $this->id;
     }
+
 
     public function getCommande(): ?commande
     {
@@ -41,6 +38,44 @@ class LivraisonClient extends Livraison
     {
         $this->commande = $commande;
 
+        return $this;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    protected function getDateLivraison(): ? \DateTimeInterface
+    {
+        return $this->dateLivraison;
+    }
+
+    protected function setDateLivraison( \DateTimeInterface $dateLivraison) : self
+    {
+        $this->dateLivraison = $dateLivraison;
+        return $this;
+    }
+
+
+    protected function getTransporteur(): ? string
+    {
+        return $this->transporteur;
+    }
+
+    protected function setTransporteur(string $transporteur): ? self
+    {
+        $this->transporteur = $transporteur;
+        return $this;
+    }
+
+
+    protected function getReference(): ? string
+    {
+        $this->reference;
+    }
+
+    protected function setReference(string $reference): ? self
+    {
+        $this->reference = $reference;
         return $this;
     }
 }

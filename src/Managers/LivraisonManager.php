@@ -26,13 +26,20 @@ class LivraisonManager
 
     public function getAllLivraisonClient()
     {
-        $em = $this->objectManager->getEntityManager();
-        $oLivraison = $em->getRepository('App:LivraisonClient')->getAll();
+        $oLivraison = $this->objectManager->getEntityManager()
+            ->getRepository(LivraisonClient::class)->getAll();
         return $oLivraison;
     }
 
     public function addLivraisonClient(LivraisonClient $livraisonClient)
     {
-        dump($livraisonClient); die;
+       return $this->objectManager->saveObject($livraisonClient);
+    }
+
+    public function findAllLivraisonClient()
+    {
+        $oLivraison = $this->objectManager->getEntityManager()
+            ->getRepository(LivraisonClient::class)->findAll();
+        return $oLivraison;
     }
 }

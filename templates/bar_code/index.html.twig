@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste Livraison{% endblock %}
+{% block title %}Code Barre liste{% endblock %}
 
 {% block content %}
     <section class="content">
         <div class="container-fluid">
             <div class="d-flex align-items-end flex-column">
                 <div class="mt-auto p-2">
-                    <a class="btn btn-info" href="{{ path('livraison_client_add') }}">Ajouter Bon de Livraison</a>
+                    <a class="btn btn-info" href="{{ path('barCode_add') }}">Generer un Code Bar</a>
                 </div>
             </div>
             <!-- /.row -->
@@ -15,7 +15,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Listes bon de livraison client</h3>
+                            <h3 class="card-title">Listes des Codes Bar</h3>
                             <div class="card-tools">
                                 <form>
                                     <div class="input-group input-group-sm" style="width: 150px;">
@@ -29,35 +29,35 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body table-responsive p-0 scrollTable" >
-                            <table class="table table-hover table-livraison">
+                            <table class="table table-hover table-produit">
                                 <thead>
                                 <tr>
-                                    <th>Reference</th>
-                                    <th>Désignation</th>
-                                    <th>Date de Livraison</th>
-                                    <th>Transporteur</th>
-                                    <th>Reference Commande</th>
+                                    <th>Numero code Barre </th>
+                                    <th>Produit</th>
+                                    <th>Code de Produit</th>
                                     <th style="width : 20%"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for livraison in livraisons %}
+                                {% for barcode in barCodes %}
                                     <tr>
-                                        <td>{{ livraison.reference }}</td>
                                         <td>
-                                            {% for commandproduit in livraison.commande.commandProduits %}
-                                                <span class="badge badge-success">
-                                                    {{ commandproduit.produit.name }}
-                                                </span>
-                                            {% endfor %}
+                                            {{ barcode.code }}
                                         </td>
-                                        <td>{{ livraison.dateLivraison | date('d/m/Y') }}</td>
-                                        <td>{{ livraison.transporteur }}</td>
-                                        <td>{{ livraison.commande.reference }}</td>
-                                        <td>
-                                            <a href="{{ path('livraison_view',{id : livraison.id}) }}" class="btn btn-default"><i class="fas fa-eye"></i></a>
-                                            <a href="#" class="btn btn-info"><i class="fa fa-pen"></i></a>
-                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                        <td>{{ barcode.produit.category.name }}</td>
+                                        <td class="text-center">{{ barcode.produit.code }} </td>
+                                        <td class="project-actions text-right">
+                                            <a class="btn btn-default btn-sm" href="#">
+                                                <i class="fas fa-eye">
+                                                </i>
+                                            </a>
+                                            <a class="btn btn-default btn-sm" href="#">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                            <a class="btn btn-danger btn-sm deleteProduit" href="#" data-id="{{ barcode.id }}">
+                                                <i class="fas fa-trash">
+                                                </i>
+                                            </a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -69,9 +69,6 @@
                     </div>
                     <!-- /.card -->
 
-                </div>
-                <div class="navigation">
-                    {{ knp_pagination_render(livraisons) }}
                 </div>
             </div>
             <!-- /.row -->

@@ -26,10 +26,15 @@ class ObjectManager
         try{
             $this->em->persist($object);
             $this->em->flush();
-            return true;
+            return [
+                'code' => 200,
+                'message' => 'Ajouter est Avec Succèss'
+            ];
         } catch (\Exception $ex) {
-            dump($ex); die;
-            return false;
+            return [
+                'code' => 500,
+                'message' => 'Enregistrement n\'est pas effectué correctement'
+            ];
         }
     }
 

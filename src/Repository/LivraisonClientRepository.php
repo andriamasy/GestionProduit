@@ -48,9 +48,13 @@ class LivraisonClientRepository extends ServiceEntityRepository
     }
     */
 
+    /**
+     * @return \Doctrine\ORM\Query
+     */
     public function getAll()
     {
-        return $this->createQueryBuilder('l')
+        $result = $this->createQueryBuilder('lc')
             ->getQuery();
+        return $result;
     }
 }

@@ -6,6 +6,7 @@ use App\Common\ObjectManager;
 use App\Entity\Produit;
 use App\Factory\ProduitManagerStaticFactory;
 use App\Form\Type\ProduitType;
+use App\Managers\BonDeCommandeManager;
 use App\Managers\PrintManager;
 use App\Managers\ProduitManager;
 use Doctrine\ORM\EntityManager;
@@ -26,11 +27,19 @@ class ProduitController extends AbstractController
 {
     private $pm;
     private $objectManager;
+    /**
+     * @var BonDeCommandeManager
+     */
+    private $commandeManager;
 
-    public function __construct(ProduitManager $pm, ObjectManager $objectManager)
+    public function __construct(
+        ProduitManager $pm,
+        ObjectManager $objectManager,
+        BonDeCommandeManager $commandeManager)
     {
         $this->pm = $pm;
         $this->objectManager = $objectManager;
+        $this->commandeManager = $commandeManager;
     }
 
     /**
@@ -41,6 +50,7 @@ class ProduitController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $aoProduit = $this->pm->getAllProduct();
         if($request->query->get('query')) {
             $query = $request->query->get('query');
@@ -67,13 +77,15 @@ class ProduitController extends AbstractController
      */
     public function addProduct(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $oProduit = new Produit();
         $form = $this->createForm(ProduitType::class, $oProduit);
         $form->handleRequest($request);
+        //dump($form->getData()); die;
         if($form->isSubmitted() && $form->isValid()) {
             $oData = $form->getData();
-            $bReturn = $this->pm->addProduct($oData);
-            if($bReturn) {
+            $aReturn = $this->pm->addProduct($oData);
+            if($aReturn['code'] === 200) {
                 $this->addFlash('success', 'Ajout Produit avec Succèss');
                 return $this->redirectToRoute('produit');
 
@@ -97,6 +109,7 @@ class ProduitController extends AbstractController
      */
     public function viewProduct(Request $request, Produit $id )
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $oProduit = $id;
         return $this->render('produit/view.html.twig',[
             'titre' => 'Detail Produit',
@@ -137,6 +150,7 @@ class ProduitController extends AbstractController
      */
     public function edit(Produit $id, Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $oProduit = $id;
         $form = $this->createForm(ProduitType::class, $oProduit);
         $form->handleRequest($request);
@@ -165,8 +179,43 @@ class ProduitController extends AbstractController
      */
     public function delete(Produit $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $oProduit = $id;
         $aResponse = $this->pm->delete($oProduit);
         return new JsonResponse($aResponse);
+    }
+
+    /**
+     * @Route(
+     *     "/api/produits",
+     *     name="api_produits_liste",
+     *     methods={"GET"},
+     *     options={"expose" = true}
+     * )
+     * @return JsonResponse
+     */
+    public function getStatProduitsAndCommand()
+    {
+        $aResponse = [];
+        $aoProduit = $this->pm->getStatProduits();
+        $aoCommand = $this->commandeManager->getStatCommand();
+        $aResponse['produit'] = $aoProduit;
+        $aResponse['command'] = $aoCommand;
+        return new JsonResponse($aResponse);
+    }
+
+    /**
+     * @Route(
+     *     "/api/produits/listes",
+     *     name="api_produits_listes_json",
+     *     methods={"GET"},
+     *     options={"expose" = true}
+     * )
+     * @return JsonResponse
+     */
+    public function getProduitWithAjax()
+    {
+        $aoProduit = $this->pm->getProduits();
+        return new JsonResponse($aoProduit);
     }
 }

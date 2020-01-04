@@ -42,4 +42,11 @@ class UserManager
         return $bReturn;
     }
 
+    public function findClient()
+    {
+        $oUserClient = $this->objectManager->getEntityManager()
+            ->getRepository(User::class)->getAllClient();
+        return $oUserClient;
+    }
+
 }

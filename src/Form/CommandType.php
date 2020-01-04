@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Unique;
 
 class CommandType extends AbstractType
 {
@@ -27,13 +28,19 @@ class CommandType extends AbstractType
         $builder
             ->add('reference', TextType::class,[
                 'label'  => ' Reference',
-                    'attr' => [
-                        'class' => 'form-control'
-                    ]
+                'label_attr' => [
+                    'class' => 'command-reference'
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
                 ])
 
             ->add('code', TextType::class, [
                 'label'  => ' Code',
+                'label_attr' => [
+                    'class' => 'command-code'
+                ],
                 'attr' => [
                     'class' => 'form-control'
                 ]

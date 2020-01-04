@@ -5,104 +5,45 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\LivraisonRepository")
+ *
  */
-class Livraison
+abstract class Livraison
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_livraison;
+    public $dateLivraison;
+
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $destination;
+    public $transporteur;
+
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $transporteur;
+    public $reference;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $designation;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $reference;
-
-    public function getId(): ?int
+    public function __construct()
     {
-        return $this->id;
+        $this->dateLivraison = new \DateTime();
     }
 
-    public function getDateLivraison(): ?\DateTimeInterface
-    {
-        return $this->date_livraison;
-    }
+    abstract protected function getDateLivraison();
 
-    public function setDateLivraison(\DateTimeInterface $date_livraison): self
-    {
-        $this->date_livraison = $date_livraison;
+    abstract protected function setDateLivraison(\DateTimeInterface $dateLivraison);
 
-        return $this;
-    }
 
-    public function getDestination(): ?string
-    {
-        return $this->destination;
-    }
+    abstract protected function getTransporteur();
 
-    public function setDestination(string $destination): self
-    {
-        $this->destination = $destination;
+    abstract protected function setTransporteur(string $transporteur);
 
-        return $this;
-    }
 
-    public function getTransporteur(): ?string
-    {
-        return $this->transporteur;
-    }
+    abstract protected function getReference();
 
-    public function setTransporteur(string $transporteur): self
-    {
-        $this->transporteur = $transporteur;
-
-        return $this;
-    }
-
-    public function getDesignation(): ?string
-    {
-        return $this->designation;
-    }
-
-    public function setDesignation(string $designation): self
-    {
-        $this->designation = $designation;
-
-        return $this;
-    }
-
-    public function getReference(): ?string
-    {
-        return $this->reference;
-    }
-
-    public function setReference(string $reference): self
-    {
-        $this->reference = $reference;
-
-        return $this;
-    }
+    abstract protected function setReference(string $reference);
 }

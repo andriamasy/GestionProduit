@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191228161303 extends AbstractMigration
+final class Version20200103131212 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,8 @@ final class Version20191228161303 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE commande DROP qte');
+        $this->addSql('ALTER TABLE livraison_client DROP destination, DROP designation');
+        $this->addSql('ALTER TABLE livraisonfournisseur DROP destination, DROP designation');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +31,7 @@ final class Version20191228161303 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE commande ADD qte LONGTEXT NOT NULL COLLATE utf8mb4_unicode_ci COMMENT \'(DC2Type:array)\'');
+        $this->addSql('ALTER TABLE livraison_client ADD destination VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci, ADD designation VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE livraisonfournisseur ADD destination VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci, ADD designation VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci');
     }
 }

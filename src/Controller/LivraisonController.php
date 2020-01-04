@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\LivraisonClient;
+use App\Entity\LivraisonClient as LivraisonClientAlias;
 use App\Form\LivraisonType;
 use App\Managers\LivraisonManager;
 use Knp\Component\Pager\PaginatorInterface;
@@ -37,13 +37,13 @@ class LivraisonController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $aoLivraison = $this->livraisonManager->getAllLivraisonClient();
         if($request->query->get('query')) {
             $query = $request->query->get('query');
             //$aoProduit = $this->livraisonManager->search($query);
         }
-
-
+        //dump($aoLivraison); die;
         $pagination = $paginator->paginate(
             $aoLivraison, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
@@ -63,16 +63,16 @@ class LivraisonController extends AbstractController
      */
     public function addLivraisonClient(Request $request)
     {
-        $oLivraison = new LivraisonClient();
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+        $oLivraison = new LivraisonClientAlias();
         $form = $this->createForm(LivraisonType::class, $oLivraison);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             $oData = $form->getData();
-            $bReturn = $this->livraisonManager->addLivraisonClient($oData);
-            if($bReturn) {
+            $aReturn = $this->livraisonManager->addLivraisonClient($oData);
+            if($aReturn['code'] === 200) {
                 $this->addFlash('success', 'Ajout Bon de Livraison avec Succèss');
                 return $this->redirectToRoute('livraison');
-
             }
         }
 
@@ -82,6 +82,25 @@ class LivraisonController extends AbstractController
             'bande' => 'Ajouter Bon de Livraison',
             'routeParent' => 'livraison',
             'routeNameParent' => 'Listes livraison client',
+        ]);
+    }
+
+    /**
+     * @Route("/livraison/{id}", name="livraison_view", methods={"GET"})
+     * @param LivraisonClientAlias $id
+     * @param Request $request
+     * @return Response
+     */
+    public function view(Request $request, LivraisonClientAlias $id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+        $oLivraisonClient = $id;
+        return $this->render('livraison/viewClient.html.twig', [
+            'titre' => 'Detail Bon de Livraison',
+            'bande' => 'Detail Bon de Livraison',
+            'routeParent' => 'livraison',
+            'routeNameParent' => 'Listes livraison client',
+            'livraison' => $oLivraisonClient,
         ]);
     }
 }

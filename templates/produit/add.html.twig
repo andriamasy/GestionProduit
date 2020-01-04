@@ -137,6 +137,7 @@
                                         {{ form_row(form.nbrBoiteProduite) }}
                                     </div>
                                 </div>
+                                {{ form_row(form.initNombreproduit) }}
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         {{ form_row(form.description) }}
@@ -168,6 +169,12 @@
 {% endblock %}
 
 {% block javascripts %}
-
+    <script>
+        $(document).ready(function () {
+            $('#produit_nbrBoiteProduite').on('keyup', function () {
+                $('#produit_initNombreproduit').val($(this).val())
+            })
+        })
+    </script>
 {% endblock %}
 

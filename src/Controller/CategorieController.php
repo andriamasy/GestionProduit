@@ -33,6 +33,7 @@ class CategorieController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $aoCategories = $this->categoriesManager->getAllCategorie();
         $pagination = $paginator->paginate(
             $aoCategories, /* query NOT result */
@@ -52,13 +53,14 @@ class CategorieController extends AbstractController
      */
     public function addCategorie(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $oCategory = new Category();
         $form = $this->createForm(CategorieType::class, $oCategory);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
             $bReturn = $this->categoriesManager->saveCategorie($oCategory);
-            if($bReturn) {
+            if($bReturn['code'] === 200) {
                 return $this->redirectToRoute('categorie');
             }
         }
@@ -102,6 +104,7 @@ class CategorieController extends AbstractController
      */
     public function editCategory(Request $request, Category $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $oCategory = $id;
         $form = $this->createForm(CategorieType::class, $oCategory);
         $form->handleRequest($request);
@@ -124,6 +127,7 @@ class CategorieController extends AbstractController
      */
     public function view(Request $request, Category $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $oCategory = $id;
         return $this->render('categorie/view.html.twig',[
             'titre' => 'Detail categorie',
